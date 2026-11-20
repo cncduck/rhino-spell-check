@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <UseWindowsForms>false</UseWindowsForms>
+    <AssemblyName>RhinoSpellCheck</AssemblyName>
+    <RootNamespace>RhinoSpellCheck</RootNamespace>
+
+    <!-- Rhino loads plug-ins as .rhp, which is just a renamed managed assembly. -->
+    <TargetExt>.rhp</TargetExt>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+
+    <Version>0.1.0</Version>
+    <Title>Rhino Spell Check</Title>
+    <Description>Spell checking for Rhino text, leaders, dimensions and text dots.</Description>
+    <Company>Rhino Spell Check</Company>
+
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <NoWarn>$(NoWarn);NU1701</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Compile-time only: Rhino supplies RhinoCommon/Eto/Rhino.UI at runtime. -->
+    <PackageReference Include="RhinoCommon" Version="8.34.26223.11001" ExcludeAssets="runtime" />
+    <!-- Pure-managed Hunspell port: no native binaries, ships with the plug-in. -->
+    <PackageReference Include="WeCantSpell.Hunspell" Version="6.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Dictionaries are deployed next to the .rhp so the plug-in runs fully offline. -->
+    <Content Include="Resources\Dictionaries\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>Dictionaries\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Panel tab icon. Embedded rather than deployed so the panel still has an
+      icon if the .rhp is copied out of its build folder. Regenerate with
+      tools\make-panel-icon.ps1; the preview PNGs beside it are for review only.
+    -->
+    <EmbeddedResource Include="Resources\Icons\SpellCheck.ico" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,16 @@
+# Build output
+bin/
+obj/
+.vs/
+TestResults/
+*.user
+*.suo
+
+# Rhino drawings and their side files - test against your own, never commit them
+*.3dm
+*.3dmbak
+*.rhl
+*_embedded_files/
+
+# Local diagnostic output
+artifacts/

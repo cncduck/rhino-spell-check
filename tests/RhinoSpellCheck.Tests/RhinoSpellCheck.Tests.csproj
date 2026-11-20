@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>RhinoSpellCheck.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      The Core layer is deliberately free of Rhino references, so it can be
+      compiled straight into the test assembly on a modern TFM. The plug-in
+      itself still ships as a single net48 .rhp.
+    -->
+    <Compile Include="..\..\src\RhinoSpellCheck\Core\*.cs" LinkBase="Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WeCantSpell.Hunspell" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+</Project>
